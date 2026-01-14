@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Atendimento Oficial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --primary: #25d366;
+      --bg: #0f172a;
+      --card: #020617;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .profile {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 4px solid var(--primary);
+      padding: 4px;
+      margin: 0 auto 24px;
+      background: var(--card);
+    }
+
+    .profile img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #000;
+      margin-bottom: 16px;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      margin-top: 16px;
+    }
+
+    .btn-secondary:hover {
+      background: #020617;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .divider {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="profile">
+      <!-- TROQUE A IMAGEM SE QUISER -->
+      <img src="https://br.freepik.com/free-photo/woman-working-call-center_1139-77.jpg" alt="Atendimento Oficial">
+    </div>
+
+    <h1>ENTRE EM CONTACTO COM UM DOS ATENDENTES</h1>
+
+    <button id="mainBtn" class="btn-primary">
+      Entrar (3)
+    </button>
+
+    <p id="infoText">
+      Você será redirecionado em 3 segundos...
+    </p>
+
+    <div class="divider">
+      <button class="btn-secondary" id="secondaryBtn">
+        Falar com atendente agora
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const REDIRECT_LINKS = [
+      "https://wa.me/5511960570738?text=oi%2C%20queria%20mais%20informacoes"
+      // adicione mais links aqui se quiser
+    ];
+
+    const REDIRECT_DELAY = 3000;
+    let countdown = 3;
+    let redirecting = false;
+
+    function getRandomLink() {
+      const index = Math.floor(Math.random() * REDIRECT_LINKS.length);
+      return REDIRECT_LINKS[index];
+    }
+
+    const mainBtn = document.getElementById("mainBtn");
+    const secondaryBtn = document.getElementById("secondaryBtn");
+    const infoText = document.getElementById("infoText");
+
+    const countdownInterval = setInterval(() => {
+      countdown--;
+
+      if (countdown <= 0) {
+        clearInterval(countdownInterval);
+        infoText.innerText = "Redirecionando para o atendimento...";
+      } else {
+        mainBtn.innerText = `Entrar (${countdown})`;
+        infoText.innerText = `Você será redirecionado em ${countdown} segundos...`;
+      }
+    }, 1000);
+
+    setTimeout(() => {
+      redirecting = true;
+      window.location.href = getRandomLink();
+    }, REDIRECT_DELAY);
+
+    function manualRedirect() {
+      window.location.href = getRandomLink();
+    }
+
+    mainBtn.addEventListener("click", manualRedirect);
+    secondaryBtn.addEventListener("click", manualRedirect);
+  </script>
+
+</body>
+</html>
